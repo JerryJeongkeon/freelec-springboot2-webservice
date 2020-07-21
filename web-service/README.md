@@ -85,6 +85,11 @@ dependencies {
 
 <br/>
 
+- **Spring Boot**는 **내장 WAS**를 실행한다.
+- **'언제 어디서나 같은 환경에서 스프링 부트를 배포'할 수 있기 때문**
+
+
+
 ### 2.2 Hello Controller 테스트 코드 작성하기
 
 ```java
@@ -155,8 +160,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(controllers = HelloController.class)
 public class HelloControllerTest {
 
-    @Autowired
     // 웹 API 테스트 할 때 사용
+    // 스프링 MVC 테스트의 시작점
+    @Autowired
     private MockMvc mvc;
 
     @Test
