@@ -210,7 +210,6 @@ package com.jojoldu.book.springboot.web.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-// 선언된 모든 필드에 get 메소드를 생성해줌
 @Getter
 // 선언된 모든 final 필드가 포함된 생성자를 생성해 줍니다.
 @RequiredArgsConstructor
@@ -254,11 +253,19 @@ public class HelloResponseDtoTest extends TestCase {
 
 <br/>
 
+#### > JUnit의 기본 assertThat이 아닌 assertj의 assertThat을 사용함
+
+- **CoreMatchers와 달리 추가적으로 라이브러리가 필요하지 않습니다.**
+  - Junit의 assertThat을 쓰게 되면 is()와 같이 CoreMatchers 라이브러리가 필요함
+- **자동완성이 좀 더 확실하게 지원됩니다.**
+
+
+
 **HelloController**에 ResponseDto를 사용하는 코드 추가
 
 ```java
 	// RequestParam
-	// 외부에서 API로 넘긴 파라미터를 가져오는 어노테이션
+	// => 외부에서 API로 넘긴 파라미터를 가져오는 어노테이션
     @GetMapping("/hello/dto")
     public HelloResponseDto helloDto(@RequestParam("name") String name, @RequestParam("amount") int amount) {
         return new HelloResponseDto(name, amount);
