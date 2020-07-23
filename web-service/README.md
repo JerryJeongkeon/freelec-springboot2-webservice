@@ -436,6 +436,58 @@ Posts 클래스에는 Setter 메소드가 없다는 특징이 있습니다.
 
 
 
+### Test Code로 PostsRepository 확인하기
+
+```java
+@RunWith(SpringRunner.class)
+@SpringBootTest
+public class PostsRepositoryTest {
+
+    @Autowired
+    PostsRepository postsRepository;
+
+    @After
+    public void cleanup(){
+        postsRepository.deleteAll();
+    }
+
+    @Test
+    public void 게시글저장_불러오기() {
+        //given
+        String title = "테스트 게시글";
+        String content = "테스트 본문";
+
+        postsRepository.save(Posts.builder()
+        .title(title)
+        .content(content)
+        .author("mr_doo2@naver.com")
+        .build());
+
+        //when
+        List<Posts> postsLIst = postsRepository.findAll();
+
+        //then
+        Posts posts = postsLIst.get(0);
+        assertThat(posts.getTitle()).isEqualTo(title);
+        assertThat(posts.getContent()).isEqualTo(content);
+    }
+}
+```
+
+<br/>
+
+**테스트 성공**. 실행되는 쿼리를 확인하기 위해 **application.properties** 파일 생성
+
+```java
+// 실행되는 쿼리들을 확인할 수 있다.
+spring.jpa.show-sql=true
+    
+// 출력 쿼리를 MySQL로 변경
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+```
+
+<br/>
+
 
 
 
