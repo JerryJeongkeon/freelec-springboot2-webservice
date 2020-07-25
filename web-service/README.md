@@ -488,9 +488,65 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialec
 
 <br/>
 
+```java
+// given
+// 테스트 기반 환경을 구축하는 단계
 
+// when
+// 테스트 하고자 하는 행위 선언
 
+// then
+// 테스트 결과 검증
+```
 
+<br/>
+
+### Spring 웹 계층
+
+- **Web Layer**
+  - 흔히 사용하는 컨트롤러와 JSP/Freemarker 등의 뷰 템플릿 영역
+  - 외부 요청과 응답에 대한 전반적인 영역
+- **Service Layer**
+  - 일반적으로 Controller와 Dao의 중간 영역에서 사용됨
+  - @Transactional이 사용되어야 하는 영역
+- **Repository Layer**
+  - Database와 같이 데이터 저장소에 접근하는 영역
+  - 기존 Dao의 영역으로 생각하면 쉬움
+- **Dtos**
+  - Dto(Data Transfer Object)는 계층 간에 데이터 교환을 위한 객체를 이야기하며 Dtos는 이들의 영역
+  - 뷰 템플릿 엔진에서 사용될 객체나 Repository Layer에서 결과로 넘겨준 객체 등이 이들을 이야기 함
+- **Domain Model**
+  - 도메인이라 불리는 개발 대상을 모든 사람이 동일한 관점에서 이해할 수 있고 공유할 수 있도록 단순화시킨 것을 도메인 모델이라고 함
+  - @Entity가 사용된 영역
+  - 다만, 무조건 데이터베이스의 테이블과 관계가 있어야만 하는 것은 아님
+  - VO처럼 값 객체들도 이 영역에 해당함
+
+<br/>
+
+<br/>
+
+로컬 환경에선 데이터베이스로 H2를 사용합니다. 메모리에서 실행하기 때문에 **직접 접근하려면 웹 콘솔**을 사용해야만 합니다.
+
+먼저 웹 콘솔 옵션을 활성화합니다. application.properties에 다음과 같이 옵션을 추가합니다.
+
+```java
+spring.h2.console.enabled=true
+```
+
+<br/>
+
+등록된 데이터를 확인한 후 API를 요청해 보겠습니다.
+
+브라우저에서 http://localhost:8080/api/v1/posts/1을 입력해 API 조회 기능을 테스트 해봅니다.
+
+<br/>
+
+```markdown
+Chrome에 JSON Viewer라는 플러그인을 설치했습니다.
+정렬된 JSON 형태가 보고 싶으신 분들은 해당 플러그인을 설치해보세요
+```
+
+<br/>
 
 
 
