@@ -548,6 +548,63 @@ Chrome에 JSON Viewer라는 플러그인을 설치했습니다.
 
 <br/>
 
+<hr/>
+
+**Entity** 클래스에 **@Builder**를 사용하자.
+
+**@Id** 값을 제외하고 생성.
+
+<br/>
+
+**RequestDto** 클래스에서는 **toEntity() 메소드**를 이용하여 객체화하자.
+
+<hr/>
+
+<br/>
+
+### JPA Auditing으로 생성시간/수정시간 자동화하기
+
+```java
+@Getter
+// JPA Entity 클래스들이 BaseTimeEntity을 상속할 경우 필드들(createdDate, lastModifiedDate)도 컬럼으로 인식하도록 함.
+@MappedSuperclass
+// BaseTimeEntity 클래스에 Auditing 기능을 포함시킴.
+@EntityListeners(AuditingEntityListener.class)
+public class BaseTimeEntity {
+
+    // Entity가 생성되어 저장될 때 시간이 자동 저장됨.
+    @CreatedDate
+    private LocalDateTime createdDate;
+
+    // 조회한 Entity의 값을 변경할 때 시간이 자동 저장됨.
+    @LastModifiedDate
+    private LocalDateTime lastModifiedDate;
+}
+```
+
+이제 Entity 클래스에서 BaseTimeEntity를 상속받아 사용할 수 있다.
+
+<br/>
+
+마지막으로 JPA Auditing 어노테이션들을 모두 활성화할 수 있도록 Application 클래스에 활성화 어노테이션 하나를 추가해준다.
+
+```java
+@EnableJpaAuditing // JPA Auditing 활성화
+@SpringBootApplication
+public class Application {
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+
+```
+
+<br/>
+
+#### JPA Auditing 테스트 코드 작성하기
+
+
+
 
 
 # JPA 어노테이션
@@ -568,11 +625,11 @@ Chrome에 JSON Viewer라는 플러그인을 설치했습니다.
 @Getter - 클래스 내 모든 필드의 Getter 메소드를 자동으로 생성
 @Setter - 클래스 내 모든 필드의 Setter 메소드를 자동으로 생성
 @NoArgsConstructor - 기본 생성자를 자동으로 추가해줍니다.
-@AllArgsConstructor - 모든 속성에 대해서 생성자를 만들어 냅니다.
+@AllArgsConstructor - 모든 속성에 대해서 생성자를 만들어 냅니다.(final)
 @ToString - toString() 메소드를 생성합니다. 
     @ToString(exclude={"제외할 값"}) 처럼 원하지 않는 속성은 제외할 수 있습니다.
     
-@Data - @ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor 어노테이션의 묶음 입니다.
+(사용금지) @Data - @ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor 어노테이션의 묶음 입니다.
 ```
 
 

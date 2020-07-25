@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ public class PostsRepositoryTest {
     PostsRepository postsRepository;
 
     @After
-    public void cleanup(){
+    public void cleanup() {
         postsRepository.deleteAll();
     }
 
@@ -32,10 +33,10 @@ public class PostsRepositoryTest {
         String content = "테스트 본문";
 
         postsRepository.save(Posts.builder()
-        .title(title)
-        .content(content)
-        .author("mr_doo2@naver.com")
-        .build());
+                .title(title)
+                .content(content)
+                .author("mr_doo2@naver.com")
+                .build());
 
         //when
         List<Posts> postsLIst = postsRepository.findAll();
@@ -44,5 +45,28 @@ public class PostsRepositoryTest {
         Posts posts = postsLIst.get(0);
         assertThat(posts.getTitle()).isEqualTo(title);
         assertThat(posts.getContent()).isEqualTo(content);
+    }
+
+    @Test
+    public void BaseTimeEntity_등록() {
+        //given
+        LocalDateTime now = LocalDateTime.of(2020, 7, 25, 0, 0, 0);
+        postsRepository.save(Posts.builder()
+        .title("title")
+        .content("content")
+        .author("author")
+        .build());
+
+        //when
+        List<Posts> postsList = postsRepository.findAll();
+
+        //then
+        Posts posts = postsList.get(0);
+
+        System.out.println(">>>>> createdDate = " + posts.getCreatedDate() + ", modifiedDate : " + posts.getLastModifiedDate());
+
+        assertThat(posts.getCreatedDate()).isAfter(now);
+        assertThat(posts.getLastModifiedDate()).isAfter(now);
+        
     }
 }
