@@ -52,10 +52,10 @@ public class PostsRepositoryTest {
         //given
         LocalDateTime now = LocalDateTime.of(2020, 7, 25, 0, 0, 0);
         postsRepository.save(Posts.builder()
-        .title("title")
-        .content("content")
-        .author("author")
-        .build());
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
 
         //when
         List<Posts> postsList = postsRepository.findAll();
@@ -67,6 +67,5 @@ public class PostsRepositoryTest {
 
         assertThat(posts.getCreatedDate()).isAfter(now);
         assertThat(posts.getLastModifiedDate()).isAfter(now);
-        
     }
 }

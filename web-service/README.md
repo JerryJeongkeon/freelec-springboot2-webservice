@@ -603,6 +603,86 @@ public class Application {
 
 #### JPA Auditing 테스트 코드 작성하기
 
+```java
+    @Test
+    public void BaseTimeEntity_등록() {
+        //given
+        LocalDateTime now = LocalDateTime.of(2020, 7, 25, 0, 0, 0);
+        postsRepository.save(Posts.builder()
+                .title("title")
+                .content("content")
+                .author("author")
+                .build());
+
+        //when
+        List<Posts> postsList = postsRepository.findAll();
+
+        //then
+        Posts posts = postsList.get(0);
+
+        System.out.println(">>>>> createdDate = " + posts.getCreatedDate() + ", modifiedDate : " + posts.getLastModifiedDate());
+
+        assertThat(posts.getCreatedDate()).isAfter(now);
+        assertThat(posts.getLastModifiedDate()).isAfter(now);
+    }
+```
+
+<hr/>
+
+### 머스테치로 화면 구성하기
+
+#### 템플릿 엔진이란?
+
+- **지정된 템플릿 양식과 데이터**가 합쳐져 HTML 문서를 출력하는 소프트웨어.
+
+<br/>
+
+**서버 템플릿 엔진**을 이용한 화면 생성은 **서버에서 Java 코드로 문자열**을 만든 뒤 이 문자열을 HTML로 변환하여 **브라우저로 전달**합니다.
+
+
+
+반면에 자바스크립트는 **브라우저 위에서 작동**합니다. 앞에서 작성된 자바스크립트 코드가 실행되는 장소는 서버가 아닌 **브라우저**입니다.
+
+<br/>
+
+<hr/>
+
+### Tip) 트랜잭션?
+
+일반적으로 DB 데이터를 등록/수정/삭제 하는 Service 메소드는 `@Transactional`를 필수적으로 가져갑니다.
+이 어노테이션이 하는 일은 간단합니다.
+
+**메소드 내에서 Exception이 발생하면** 해당 메소드에서 이루어진 **모든 DB작업을 초기화** 시킵니다.
+
+즉, save 메소드를 통해서 10개를 등록해야하는데 5번째에서 **Exception이 발생**하면 앞에 저장된 4개까지를 **전부 롤백**시켜버립니다.
+
+
+
+(정확히 얘기하면, **이미 넣은걸 롤백시키는건 아니며**, **모든 처리가 정상적으로 됐을때만 DB에 커밋**하며 그렇지 않은 경우엔 커밋하지 않는것입니다.)
+좀 더 상세한 설명이 필요하신 분들은 [트랜잭션이란 도대체 뭐란 말인가!](http://springmvc.egloos.com/495798)를 참고하세요!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
