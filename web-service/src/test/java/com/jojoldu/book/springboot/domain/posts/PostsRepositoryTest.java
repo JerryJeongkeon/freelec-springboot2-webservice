@@ -27,6 +27,11 @@ public class PostsRepositoryTest {
     }
 
     @Test
+    public void 기본생성자_테스트() throws Exception{
+        Posts posts = new Posts();
+    }
+
+    @Test
     public void 게시글저장_불러오기() {
         //given
         String title = "테스트 게시글";

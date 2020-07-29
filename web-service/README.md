@@ -549,7 +549,6 @@ Chrome에 JSON Viewer라는 플러그인을 설치했습니다.
 <br/>
 
 <hr/>
-
 **Entity** 클래스에 **@Builder**를 사용하자.
 
 **@Id** 값을 제외하고 생성.
@@ -559,7 +558,6 @@ Chrome에 JSON Viewer라는 플러그인을 설치했습니다.
 **RequestDto** 클래스에서는 **toEntity() 메소드**를 이용하여 객체화하자.
 
 <hr/>
-
 <br/>
 
 ### JPA Auditing으로 생성시간/수정시간 자동화하기
@@ -628,7 +626,6 @@ public class Application {
 ```
 
 <hr/>
-
 ### 머스테치로 화면 구성하기
 
 #### 템플릿 엔진이란?
@@ -646,7 +643,6 @@ public class Application {
 <br/>
 
 <hr/>
-
 ### Tip) 트랜잭션?
 
 일반적으로 DB 데이터를 등록/수정/삭제 하는 Service 메소드는 `@Transactional`를 필수적으로 가져갑니다.
@@ -661,9 +657,62 @@ public class Application {
 (정확히 얘기하면, **이미 넣은걸 롤백시키는건 아니며**, **모든 처리가 정상적으로 됐을때만 DB에 커밋**하며 그렇지 않은 경우엔 커밋하지 않는것입니다.)
 좀 더 상세한 설명이 필요하신 분들은 [트랜잭션이란 도대체 뭐란 말인가!](http://springmvc.egloos.com/495798)를 참고하세요!
 
+<hr/>
 
+1. ### @NoArgsConstructor : 기본 생성자 자동 추가
 
+   - Entity 클래스를 **프로젝트 코드상에서 기본생성자로 생성하는 것은 막되**, **JPA에서 Entity 클래스를 생성하는것은 허용**하기 위해 추가
 
+     
+
+   - ##### Entity 클래스에는 @NoArgsConstructor를 사용하자!
+
+<br/>
+
+2. ### @Builder
+
+   - 생성자 상단에 선언시 생성자에 포함된 필드만 빌더에 포함
+
+     
+
+   - ##### 생성자 대신 Builder 패턴을 활용하자! ( 의미가 명확함 )
+
+<br/>
+
+3. ### @AllArgsConstrucor
+
+   - **XXXController** 내에서 Repository 사용을 위해 **생성자로 Bean 주입**
+
+   
+
+   - 생성자를 직접 안쓰고 Lombok 어노테이션을 사용한 이유는 간단합니다.
+     해당 클래스의 **의존성 관계가 변경될때마다 생성자 코드를 계속해서 수정하는 번거로움을 해결**하기 위함입니다.
+
+     
+
+   - ##### Repository의 Bean 주입을 위해 생성자(@AllArgsConstructor)를 사용하자!
+
+<br/>
+
+4. ### @Setter
+
+   - **Controller**에서 **@RequestBody**로 외부에서 데이터를 받는 경우엔 **기본생성자 + set 메소드를 통해서만 값이 할당**됩니다.
+
+     
+
+   - **RequestDto**와 같은 형태에서는 **@Setter**와 **@NoArgsConstructor**를 사용하자!
+
+<br/>
+
+5. ### @Transactional(readOnly = true)
+
+   - 트랜잭션 범위는 유지하되, **조회 기능만 남겨두어 조회 속도가 개선**되기 때문에 특별히 등록/수정/삭제 기능이 없는 메소드에선 사용하시는걸 추천드립니다.
+
+     
+
+   - 조회 기능만 하는 Service에서는 **@Transactional(readOnly = true)** 를 사용하여 속도를 개선시키자!
+
+<br/>
 
 
 
