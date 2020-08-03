@@ -658,7 +658,6 @@ public class Application {
 좀 더 상세한 설명이 필요하신 분들은 [트랜잭션이란 도대체 뭐란 말인가!](http://springmvc.egloos.com/495798)를 참고하세요!
 
 <hr/>
-
 1. ### @NoArgsConstructor : 기본 생성자 자동 추가
 
    - Entity 클래스를 **프로젝트 코드상에서 기본생성자로 생성하는 것은 막되**, **JPA에서 Entity 클래스를 생성하는것은 허용**하기 위해 추가
@@ -715,7 +714,6 @@ public class Application {
 <br/>
 
 <hr/>
-
 # 👨‍💻  스프링 시큐리티와 OAuth 2.0으로 로그인 기능 구현하기
 
 ### 구글 서비스 등록
@@ -819,6 +817,12 @@ compile('org.springframework.boot:spring-boot-starter-oauth2-client')
 ```
 
 <br/>
+
+
+
+
+
+<hr/>
 
 
 
