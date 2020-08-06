@@ -501,6 +501,43 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialec
 
 <br/>
 
+<hr/>
+
+
+
+# JPA 어노테이션
+
+```java
+@Entity - 테이블과 링크될 클래스임을 나타낸다. 
+    	- 카멜케이스 매칭(UserImage.java-> user_image table)
+@Table - DB와 매핑될 클래스 정보
+@Column - 매핑할 테이블 컬럼명을 name 속성으로 매핑하는 용도
+    	- name 생략 시, 필드의 이름을 따름
+```
+
+
+
+# Lombok 어노테이션
+
+```java
+@Getter - 클래스 내 모든 필드의 Getter 메소드를 자동으로 생성
+@Setter - 클래스 내 모든 필드의 Setter 메소드를 자동으로 생성
+@NoArgsConstructor - 기본 생성자를 자동으로 추가해줍니다.
+@AllArgsConstructor - 모든 속성에 대해서 생성자를 만들어 냅니다.(final)
+@ToString - toString() 메소드를 생성합니다. 
+    @ToString(exclude={"제외할 값"}) 처럼 원하지 않는 속성은 제외할 수 있습니다.
+    
+(사용금지) @Data - @ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor 어노테이션의 묶음 입니다.
+```
+
+
+
+
+
+<hr/>
+
+
+
 ### Spring 웹 계층
 
 - **Web Layer**
@@ -826,6 +863,15 @@ compile('org.springframework.boot:spring-boot-starter-oauth2-client')
 
 
 
+### CI란?
+
+- VCS 시스템에 PUSH가 되면 자동으로 테스트와 빌드가 수행되어 **안정적인 배포 파일을 만드는 과정**
+
+
+
+### CD란?
+
+- CI 빌드 결과를 자동으로 **운영 서버에 무중단 배포까지 진행되는 과정**
 
 
 
@@ -838,29 +884,7 @@ compile('org.springframework.boot:spring-boot-starter-oauth2-client')
 
 
 
-# JPA 어노테이션
-
-```java
-@Entity - 테이블과 링크될 클래스임을 나타낸다. 
-    	- 카멜케이스 매칭(UserImage.java-> user_image table)
-@Table - DB와 매핑될 클래스 정보
-@Column - 매핑할 테이블 컬럼명을 name 속성으로 매핑하는 용도
-    	- name 생략 시, 필드의 이름을 따름
-```
 
 
-
-# Lombok 어노테이션
-
-```java
-@Getter - 클래스 내 모든 필드의 Getter 메소드를 자동으로 생성
-@Setter - 클래스 내 모든 필드의 Setter 메소드를 자동으로 생성
-@NoArgsConstructor - 기본 생성자를 자동으로 추가해줍니다.
-@AllArgsConstructor - 모든 속성에 대해서 생성자를 만들어 냅니다.(final)
-@ToString - toString() 메소드를 생성합니다. 
-    @ToString(exclude={"제외할 값"}) 처럼 원하지 않는 속성은 제외할 수 있습니다.
-    
-(사용금지) @Data - @ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor 어노테이션의 묶음 입니다.
-```
 
 
